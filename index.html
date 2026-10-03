@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -226,25 +226,25 @@
 <div class="container">
 
     <div class="hero">
-        <h1>ðŸ“¦ Planificador de Ingreso de Materiales <span style="font-size:.9rem;font-weight:400;opacity:.85">Pro</span></h1>
-        <p>Distribuye tus materiales en dÃ­as laborables (Lunâ€“SÃ¡b), edita el plan y expÃ³rtalo a Excel profesional.</p>
+        <h1>📦 Planificador de Ingreso de Materiales <span style="font-size:.9rem;font-weight:400;opacity:.85">Pro</span></h1>
+        <p>Distribuye tus materiales en días laborables (Lun–Sáb), edita el plan y expórtalo a Excel profesional.</p>
     </div>
 
     <div class="card" id="seccionNube">
-        <h2>â˜ Respaldo en la nube <span class="badge" id="badgeNube">Modo local</span></h2>
+        <h2>☁ Respaldo en la nube <span class="badge" id="badgeNube">Modo local</span></h2>
         <div class="hint" id="nubeHint">Tus datos viven en este navegador. Conecta Supabase para respaldarlos y verlos en otros dispositivos.</div>
         <div class="form-row" id="nubeLoginRow" style="margin-top:12px">
             <div class="form-group" style="flex:2;min-width:200px">
-                <label for="nubeEmail">Correo para entrar (enlace mÃ¡gico, sin contraseÃ±a)</label>
+                <label for="nubeEmail">Correo para entrar (enlace mágico, sin contraseña)</label>
                 <input type="email" id="nubeEmail" placeholder="tu@correo.com" autocomplete="email">
             </div>
             <div class="form-group" style="display:flex;align-items:flex-end;min-width:160px">
-                <button class="btn-primary" onclick="entrarNube()" style="width:100%">âœ‰ Enviar enlace</button>
+                <button class="btn-primary" onclick="entrarNube()" style="width:100%">✉ Enviar enlace</button>
             </div>
         </div>
         <div class="toolbar">
-            <button class="btn-secondary btn-small" id="btnSyncAhora" onclick="pushNube(true)" style="display:none">â¬† Sincronizar ahora</button>
-            <button class="btn-ghost btn-small" id="btnSalirNube" onclick="salirNube()" style="display:none">Cerrar sesiÃ³n</button>
+            <button class="btn-secondary btn-small" id="btnSyncAhora" onclick="pushNube(true)" style="display:none">⬆ Sincronizar ahora</button>
+            <button class="btn-ghost btn-small" id="btnSalirNube" onclick="salirNube()" style="display:none">Cerrar sesión</button>
         </div>
     </div>
 
@@ -270,10 +270,10 @@
         </div>
         <ul id="listaMateriales" class="material-list"></ul>
         <div class="toolbar">
-            <button class="btn-ghost btn-small" onclick="limpiarMateriales()">ðŸ—‘ Limpiar todo</button>
-            <button class="btn-ghost btn-small" onclick="cargarEjemplo()">âœ¨ Cargar ejemplo</button>
-            <button class="btn-ghost btn-small" onclick="exportarJSON()">â¬‡ Exportar JSON</button>
-            <button class="btn-ghost btn-small" onclick="document.getElementById('fileJSON').click()">â¬† Importar JSON</button>
+            <button class="btn-ghost btn-small" onclick="limpiarMateriales()">🗑 Limpiar todo</button>
+            <button class="btn-ghost btn-small" onclick="cargarEjemplo()">✨ Cargar ejemplo</button>
+            <button class="btn-ghost btn-small" onclick="exportarJSON()">⬇ Exportar JSON</button>
+            <button class="btn-ghost btn-small" onclick="document.getElementById('fileJSON').click()">⬆ Importar JSON</button>
             <input type="file" id="fileJSON" accept=".json,application/json" style="display:none" onchange="importarJSON(event)">
         </div>
     </div>
@@ -284,42 +284,42 @@
             <div class="form-group">
                 <label for="fechaInicio">Fecha de Inicio</label>
                 <input type="date" id="fechaInicio">
-                <div class="hint" id="fechaFinEstimada">â€”</div>
+                <div class="hint" id="fechaFinEstimada">—</div>
             </div>
             <div class="form-group">
-                <label for="numDias">DÃ­as Laborables (Lunâ€“SÃ¡b)</label>
+                <label for="numDias">Días Laborables (Lun–Sáb)</label>
                 <input type="number" id="numDias" placeholder="Ej: 24" min="1" max="365" value="24">
             </div>
             <div class="form-group">
-                <label for="modoDist">Modo de distribuciÃ³n</label>
+                <label for="modoDist">Modo de distribución</label>
                 <select id="modoDist">
-                    <option value="aleatorio" selected>ðŸŽ² Aleatorio equilibrado</option>
-                    <option value="uniforme">ðŸ“ Uniforme (parejo)</option>
-                    <option value="unicos">ðŸ”¢ Ãšnicos (sin repetir)</option>
-                    <option value="inicio">ðŸ“ˆ Cargado al inicio</option>
-                    <option value="fin">ðŸ“‰ Cargado al final</option>
+                    <option value="aleatorio" selected>🎲 Aleatorio equilibrado</option>
+                    <option value="uniforme">📏 Uniforme (parejo)</option>
+                    <option value="unicos">🔢 Únicos (sin repetir)</option>
+                    <option value="inicio">📈 Cargado al inicio</option>
+                    <option value="fin">📉 Cargado al final</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="selVar">VariaciÃ³n mÃ¡xima</label>
-                <select id="selVar" title="Acota cuÃ¡nto puede desviarse cada dÃ­a del promedio. Solo aplica a los modos aleatorios.">
-                    <option value="0.10">Â±10% (muy pareja)</option>
-                    <option value="0.20">Â±20%</option>
-                    <option value="0.25" selected>Â±25% (recomendado)</option>
-                    <option value="0.40">Â±40% (mÃ¡s viva)</option>
-                    <option value="1">Sin lÃ­mite (clÃ¡sica)</option>
+                <label for="selVar">Variación máxima</label>
+                <select id="selVar" title="Acota cuánto puede desviarse cada día del promedio. Solo aplica a los modos aleatorios.">
+                    <option value="0.10">±10% (muy pareja)</option>
+                    <option value="0.20">±20%</option>
+                    <option value="0.25" selected>±25% (recomendado)</option>
+                    <option value="0.40">±40% (más viva)</option>
+                    <option value="1">Sin límite (clásica)</option>
                 </select>
-                <div class="hint">Acota los picos y valles. En Ãšnicos define el rango donde se abren los valores. No aplica a Uniforme.</div>
+                <div class="hint">Acota los picos y valles. En Únicos define el rango donde se abren los valores. No aplica a Uniforme.</div>
             </div>
         </div>
         <div class="form-row" style="margin-bottom:0">
             <div class="form-group">
                 <label class="check-row" style="font-weight:400">
                     <input type="checkbox" id="evitarCeros" checked>
-                    Evitar dÃ­as en cero (si el total lo permite, reparte mÃ­nimo 1 por dÃ­a)
+                    Evitar días en cero (si el total lo permite, reparte mínimo 1 por día)
                 </label>
                 <div class="form-group" style="display:flex;align-items:flex-end;margin-top:12px">
-                    <button class="btn-success" onclick="generarPlan()" style="width:100%">ðŸš€ Generar Plan</button>
+                    <button class="btn-success" onclick="generarPlan()" style="width:100%">🚀 Generar Plan</button>
                 </div>
             </div>
         </div>
@@ -332,7 +332,7 @@
 
     <div class="card" id="seccionResultados" style="display:none">
         <h2>3. Plan de Ingreso <span class="badge warn" id="alertaDiferencia" style="display:none"></span></h2>
-        <div class="hint">ðŸ’¡ Puedes editar cualquier cantidad directamente en la tabla. Los totales se recalculan solos. Si editas, el Excel respetarÃ¡ tus cambios.</div>
+        <div class="hint">💡 Puedes editar cualquier cantidad directamente en la tabla. Los totales se recalculan solos. Si editas, el Excel respetará tus cambios.</div>
         <div class="table-container">
             <table id="tablaPlan">
                 <thead id="tablaHead"></thead>
@@ -341,25 +341,25 @@
             </table>
         </div>
         <div class="actions">
-            <button class="btn-secondary" onclick="regenerarDistribucion()">ðŸ”„ Redistribuir</button>
-            <button class="btn-secondary" onclick="imprimirPlan()">ðŸ–¨ Imprimir</button>
-            <button class="btn-secondary" onclick="exportarCSV()">ðŸ“„ CSV</button>
-            <button class="btn-success" onclick="exportarExcel()">ðŸ“Š Descargar Excel (.xlsx)</button>
+            <button class="btn-secondary" onclick="regenerarDistribucion()">🔄 Redistribuir</button>
+            <button class="btn-secondary" onclick="imprimirPlan()">🖨 Imprimir</button>
+            <button class="btn-secondary" onclick="exportarCSV()">📄 CSV</button>
+            <button class="btn-success" onclick="exportarExcel()">📊 Descargar Excel (.xlsx)</button>
         </div>
     </div>
 
     <div class="card" id="seccionGrafico" style="display:none">
-        <h2>4. GrÃ¡fico de avance diario <span class="badge" id="badgeDiasGrafico"></span></h2>
+        <h2>4. Gráfico de avance diario <span class="badge" id="badgeDiasGrafico"></span></h2>
         <div class="chart-controls">
             <div class="form-group" style="max-width:260px">
                 <label for="selGrafico">Vista</label>
                 <select id="selGrafico" onchange="actualizarGrafico()">
-                    <option value="total">ðŸ“Š Total por dÃ­a + acumulado</option>
-                    <option value="apilado">ðŸ§± Apilado por material</option>
-                    <option value="acumulado">ðŸ“ˆ Acumulado vs ideal</option>
-                    <option value="porcentaje">ðŸ’¯ % avance acumulado</option>
-                    <option value="real-dia">âš– Real vs Plan por dÃ­a</option>
-                    <option value="real-acum">âš– Real vs Plan acumulado</option>
+                    <option value="total">📊 Total por día + acumulado</option>
+                    <option value="apilado">🧱 Apilado por material</option>
+                    <option value="acumulado">📈 Acumulado vs ideal</option>
+                    <option value="porcentaje">💯 % avance acumulado</option>
+                    <option value="real-dia">⚖ Real vs Plan por día</option>
+                    <option value="real-acum">⚖ Real vs Plan acumulado</option>
                 </select>
             </div>
             <div class="form-group" style="max-width:260px">
@@ -367,10 +367,10 @@
                 <select id="selMatGrafico" onchange="actualizarGrafico()"><option value="todos">Todos</option></select>
             </div>
             <div class="form-group" style="max-width:220px">
-                <label class="check-row" style="font-weight:400"><input type="checkbox" id="chkAcum" checked onchange="actualizarGrafico()"> Mostrar lÃ­nea de acumulado</label>
+                <label class="check-row" style="font-weight:400"><input type="checkbox" id="chkAcum" checked onchange="actualizarGrafico()"> Mostrar línea de acumulado</label>
             </div>
             <div class="form-group" style="max-width:220px;display:flex;align-items:flex-end">
-                <button class="btn-secondary btn-small" onclick="descargarGrafico()" style="width:100%">â¬‡ Descargar PNG</button>
+                <button class="btn-secondary btn-small" onclick="descargarGrafico()" style="width:100%">⬇ Descargar PNG</button>
             </div>
         </div>
         <div class="chart-wrap"><canvas id="graficoAvance"></canvas></div>
@@ -380,16 +380,16 @@
 
     <div class="card" id="seccionSeguimiento" style="display:none">
         <h2>5. Avance real vs planificado <span class="badge ok" id="badgeCumpl">0%</span></h2>
-        <div class="hint">âœ… Los reales vienen precargados con el plan: ajusta las excepciones (lo no entregado en 0 genera el negativo) y marca cumplida cada fecha hecha. <strong>Solo suma lo marcado:</strong> lo pendiente cuenta como atraso en el reporte.</div>
+        <div class="hint">✅ Los reales vienen precargados con el plan: ajusta las excepciones (lo no entregado en 0 genera el negativo) y marca cumplida cada fecha hecha. <strong>Solo suma lo marcado:</strong> lo pendiente cuenta como atraso en el reporte.</div>
         <div class="seg-controls" style="margin-top:12px">
-            <button class="btn-success btn-small" onclick="marcarHastaHoy()">âœ… Marcar cumplidas hasta hoy</button>
-            <button class="btn-secondary btn-small" onclick="desmarcarTodo()">â†© Desmarcar todo</button>
-            <button class="btn-secondary btn-small" onclick="copiarPlanAReal()">ðŸ“‹ Copiar plan â†’ real</button>
-            <button class="btn-ghost btn-small" onclick="limpiarReales()">ðŸ§¹ Limpiar reales</button>
+            <button class="btn-success btn-small" onclick="marcarHastaHoy()">✅ Marcar cumplidas hasta hoy</button>
+            <button class="btn-secondary btn-small" onclick="desmarcarTodo()">↩ Desmarcar todo</button>
+            <button class="btn-secondary btn-small" onclick="copiarPlanAReal()">📋 Copiar plan → real</button>
+            <button class="btn-ghost btn-small" onclick="limpiarReales()">🧹 Limpiar reales</button>
         </div>
         <div class="corte-row">
             <div class="form-group">
-                <label for="fechaCorte">ðŸ“ Fecha de corte</label>
+                <label for="fechaCorte">📍 Fecha de corte</label>
                 <input type="date" id="fechaCorte" onchange="onCorteChange()">
             </div>
             <div class="form-group" style="display:flex;gap:8px;align-items:flex-end">
@@ -410,7 +410,7 @@
         <div class="avance-grid" id="cumplGrid"></div>
     </div>
 
-    <footer>Planificador Pro â€¢ Lunâ€“SÃ¡b â€¢ Tus datos se guardan automÃ¡ticamente en este navegador</footer>
+    <footer>Planificador Pro • Lun–Sáb • Tus datos se guardan automáticamente en este navegador</footer>
 </div>
 
 <div id="toastContainer"></div>
@@ -420,8 +420,8 @@
     const LS_PLAN = 'planMaterialesPro_plan_v1';
     const LS_TS = 'planMaterialesPro_ts_v1';
 
-    // â˜ PEGA AQUÃ tus datos de Supabase (Dashboard â†’ Project Settings â†’ API).
-    // Si los dejas como estÃ¡n, la app funciona normal en modo local.
+    // ☁ PEGA AQUÍ tus datos de Supabase (Dashboard → Project Settings → API).
+    // Si los dejas como están, la app funciona normal en modo local.
     const SUPABASE_URL = "https://graitiiaokbmsxyqhgsx.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdyYWl0aWlhb2tibXN4eXFoZ3N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA5OTkxMDcsImV4cCI6MjEwNjU3NTEwN30.BpO_iBxJNCj-w_nSGViu838VgN6KpsC7iu5RLF_nYUM";
     const nube = { on: false, client: null, user: null, pushTimer: null };
@@ -439,7 +439,7 @@
     let modoUsado = 'aleatorio';
 
     const $ = id => document.getElementById(id);
-    const MODO_LABEL = { aleatorio: 'Aleatorio equilibrado', uniforme: 'Uniforme', unicos: 'Ãšnicos (sin repetir)', inicio: 'Cargado al inicio', fin: 'Cargado al final' };
+    const MODO_LABEL = { aleatorio: 'Aleatorio equilibrado', uniforme: 'Uniforme', unicos: 'Únicos (sin repetir)', inicio: 'Cargado al inicio', fin: 'Cargado al final' };
 
     function esc(s) {
         return String(s ?? '')
@@ -504,7 +504,7 @@
                 variacion = Number.isFinite(+p.variacion) ? +p.variacion : 0.25;
                 realPrefill = p.realPrefill === true;
                 normalizarSeguimiento();
-                // Migrar planes viejos: si los reales estÃ¡n vÃ­rgenes (todo en 0 y
+                // Migrar planes viejos: si los reales están vírgenes (todo en 0 y
                 // nada cumplido), precargarlos con el plan una sola vez.
                 if (!realPrefill && planGenerado.length) {
                     const algunoNoCero = reales.some(r => r.cantidades.some(v => (Number(v) || 0) !== 0));
@@ -526,8 +526,8 @@
         const unidad = $('matUnidad').value.trim().slice(0, 20);
 
         if (!nombre) { toast('Ingresa el nombre del material.', 'error'); $('matNombre').focus(); return; }
-        if (!Number.isFinite(cantidad) || cantidad <= 0) { toast('Ingresa una cantidad vÃ¡lida mayor a 0.', 'error'); $('matCantidad').focus(); return; }
-        if (cantidad > 1000000000) { toast('Cantidad mÃ¡xima: 1,000,000,000.', 'error'); return; }
+        if (!Number.isFinite(cantidad) || cantidad <= 0) { toast('Ingresa una cantidad válida mayor a 0.', 'error'); $('matCantidad').focus(); return; }
+        if (cantidad > 1000000000) { toast('Cantidad máxima: 1,000,000,000.', 'error'); return; }
 
         const dup = materiales.find(m => m.nombre.toLowerCase() === nombre.toLowerCase() && m.id !== editId);
         if (dup) { toast('Ya existe un material con ese nombre.', 'error'); return; }
@@ -555,7 +555,7 @@
         $('matNombre').value = mat.nombre;
         $('matCantidad').value = mat.cantidad;
         $('matUnidad').value = mat.unidad || '';
-        $('btnAgregar').textContent = 'ðŸ’¾ Guardar cambios';
+        $('btnAgregar').textContent = '💾 Guardar cambios';
         $('btnCancelarEdicion').style.display = '';
         $('matNombre').focus();
     }
@@ -580,17 +580,17 @@
 
     function limpiarMateriales() {
         if (!materiales.length) return;
-        if (!confirm('Â¿Eliminar todos los materiales?')) return;
+        if (!confirm('¿Eliminar todos los materiales?')) return;
         materiales = []; cancelarEdicion(true);
         guardarLocal(); renderizarListaMateriales(); actualizarFechaFinEstimada();
     }
 
     function cargarEjemplo() {
-        if (materiales.length && !confirm('Esto agregarÃ¡ materiales de ejemplo. Â¿Continuar?')) return;
+        if (materiales.length && !confirm('Esto agregará materiales de ejemplo. ¿Continuar?')) return;
         const ejemplos = [
             { nombre: 'Cemento', cantidad: 1200, unidad: 'bolsas' },
             { nombre: 'Acero', cantidad: 800, unidad: 'varillas' },
-            { nombre: 'Arena', cantidad: 500, unidad: 'mÂ³' }
+            { nombre: 'Arena', cantidad: 500, unidad: 'm³' }
         ];
         ejemplos.forEach(e => {
             if (!materiales.find(m => m.nombre.toLowerCase() === e.nombre.toLowerCase()))
@@ -604,7 +604,7 @@
         const lista = $('listaMateriales');
         $('contadorMat').textContent = materiales.length;
         if (!materiales.length) {
-            lista.innerHTML = '<li class="empty-state">No hay materiales agregados aÃºn. Agrega el primero arriba ðŸ‘†</li>';
+            lista.innerHTML = '<li class="empty-state">No hay materiales agregados aún. Agrega el primero arriba 👆</li>';
             return;
         }
         const totalUnd = materiales.reduce((a, m) => a + m.cantidad, 0);
@@ -612,7 +612,7 @@
             <li class="material-item">
                 <div class="material-info">
                     <strong>${esc(m.nombre)}</strong>
-                    <span>${Number(m.cantidad).toLocaleString('es-ES')} ${esc(m.unidad || 'unidades')} â€¢ ${totalUnd ? Math.round(m.cantidad / totalUnd * 100) : 0}% del total</span>
+                    <span>${Number(m.cantidad).toLocaleString('es-ES')} ${esc(m.unidad || 'unidades')} • ${totalUnd ? Math.round(m.cantidad / totalUnd * 100) : 0}% del total</span>
                 </div>
                 <div class="material-actions">
                     <button class="btn-secondary btn-small" onclick="editarMaterial('${m.id}')">Editar</button>
@@ -621,13 +621,13 @@
             </li>`).join('');
     }
 
-    // ---------- Fechas (Lunâ€“SÃ¡b) ----------
+    // ---------- Fechas (Lun–Sáb) ----------
     function generarFechas(fechaInicioStr, numDias) {
         const [y, mo, d] = fechaInicioStr.split('-').map(Number);
         if (!y || !mo || !d) return [];
         let fecha = new Date(y, mo - 1, d);
         if (isNaN(fecha)) return [];
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'];
+        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const fechas = [];
         let diasGenerados = 0, guard = 0;
         while (diasGenerados < numDias && guard++ < numDias * 10 + 10) {
@@ -647,14 +647,14 @@
     function actualizarFechaFinEstimada() {
         const f = $('fechaInicio').value;
         const n = parseInt($('numDias').value, 10);
-        if (!f || !n || n <= 0) { $('fechaFinEstimada').textContent = 'â€”'; return; }
+        if (!f || !n || n <= 0) { $('fechaFinEstimada').textContent = '—'; return; }
         const fechas = generarFechas(f, n);
-        if (!fechas.length) { $('fechaFinEstimada').textContent = 'â€”'; return; }
+        if (!fechas.length) { $('fechaFinEstimada').textContent = '—'; return; }
         const fin = fechas[fechas.length - 1];
-        $('fechaFinEstimada').textContent = `Fin estimado: ${fin.fecha} (${fin.dia}) â€¢ ${n} dÃ­as laborables Lunâ€“SÃ¡b`;
+        $('fechaFinEstimada').textContent = `Fin estimado: ${fin.fecha} (${fin.dia}) • ${n} días laborables Lun–Sáb`;
     }
 
-    // ---------- DistribuciÃ³n ----------
+    // ---------- Distribución ----------
     function repartirResto(cantidades, sobrante) {
         const dias = cantidades.length;
         if (dias === 0 || sobrante <= 0) return cantidades;
@@ -685,7 +685,7 @@
     }
 
     // Recorta el reparto al rango [media*(1-v), media*(1+v)] y repara la suma
-    // moviendo unidades entre dÃ­as con margen. La suma final siempre cuadra.
+    // moviendo unidades entre días con margen. La suma final siempre cuadra.
     function aplicarLimites(arr, total, v, evitarCeros) {
         const dias = arr.length;
         if (dias <= 0 || v == null || !(v < 1)) return arr;
@@ -737,10 +737,10 @@
         return aplicarLimites(repartirResto(arr, resto - asignado), total, v, evitarCeros);
     }
 
-    // ÃšNICOS con aire: valores distintos, suma exacta, repartidos con holgura
-    // dentro del rango de variaciÃ³n (no consecutivos pegados). Si el rango no
-    // da para N distintos, se amplÃ­a lo mÃ­nimo (la unicidad manda).
-    // Retorna null si es matemÃ¡ticamente imposible (total muy bajo).
+    // ÚNICOS con aire: valores distintos, suma exacta, repartidos con holgura
+    // dentro del rango de variación (no consecutivos pegados). Si el rango no
+    // da para N distintos, se amplía lo mínimo (la unicidad manda).
+    // Retorna null si es matemáticamente imposible (total muy bajo).
     function distribuirUnicos(total, dias, evitarCeros, v) {
         if (dias <= 0) return [];
         total = Math.floor(total);
@@ -748,7 +748,7 @@
         const minVal = (evitarCeros && total >= dias) ? 1 : 0;
         const tri = (dias * (dias - 1)) / 2;
         if (total < dias * minVal + tri) return null;
-        const vv = (v == null || !(v < 1)) ? 0.5 : v; // Sin lÃ­mite â†’ Â±50% en Ãšnicos
+        const vv = (v == null || !(v < 1)) ? 0.5 : v; // Sin límite → ±50% en Únicos
         const media = total / dias;
         let lo = Math.min(Math.floor(media * (1 - vv)), Math.floor(media - (dias - 1) / 2));
         if (lo < minVal) lo = minVal;
@@ -782,7 +782,7 @@
                 }
             }
         }
-        // Orden aleatorio en los dÃ­as
+        // Orden aleatorio en los días
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -800,7 +800,7 @@
 
     function etiquetaModo() {
         const base = MODO_LABEL[modoUsado] || modoUsado;
-        if (modoUsado !== 'uniforme' && modoUsado !== 'unicos' && variacion < 1) return `${base} Â±${Math.round(variacion * 100)}%`;
+        if (modoUsado !== 'uniforme' && modoUsado !== 'unicos' && variacion < 1) return `${base} ±${Math.round(variacion * 100)}%`;
         return base;
     }
 
@@ -810,7 +810,7 @@
         const fechaInicio = $('fechaInicio').value;
         const numDias = parseInt($('numDias').value, 10);
         if (!fechaInicio) { toast('Selecciona una fecha de inicio.', 'error'); return; }
-        if (!Number.isFinite(numDias) || numDias < 1 || numDias > 365) { toast('DÃ­as vÃ¡lidos: 1 a 365.', 'error'); return; }
+        if (!Number.isFinite(numDias) || numDias < 1 || numDias > 365) { toast('Días válidos: 1 a 365.', 'error'); return; }
 
         fechasPlan = generarFechas(fechaInicio, numDias);
         if (fechasPlan.length !== numDias) { toast('No se pudieron generar las fechas.', 'error'); return; }
@@ -827,7 +827,7 @@
                 if (!cantidades) {
                     cantidades = distribuirAleatorio(m.cantidad, numDias, evitarCeros, 0.25);
                     const minVal = (evitarCeros && m.cantidad >= numDias) ? 1 : 0;
-                    sinUnicos.push(`${m.nombre} (total ${m.cantidad}, mÃ­nimo ${numDias * minVal + (numDias * (numDias - 1)) / 2} para ${numDias} Ãºnicos)`);
+                    sinUnicos.push(`${m.nombre} (total ${m.cantidad}, mínimo ${numDias * minVal + (numDias * (numDias - 1)) / 2} para ${numDias} únicos)`);
                 }
             } else {
                 cantidades = distribuir(m.cantidad, numDias, modoUsado, evitarCeros, variacion);
@@ -849,13 +849,13 @@
         $('seccionGrafico').style.display = 'block';
         $('seccionSeguimiento').style.display = 'block';
         $('seccionResultados').scrollIntoView({ behavior: 'smooth' });
-        if (sinUnicos.length) toast(`âš  Sin valores Ãºnicos en: ${sinUnicos.join(' â€¢ ')}. Total muy bajo: se usÃ³ aleatorio Â±25%.`, 'warn');
+        if (sinUnicos.length) toast(`⚠ Sin valores únicos en: ${sinUnicos.join(' • ')}. Total muy bajo: se usó aleatorio ±25%.`, 'warn');
         else toast('Plan generado correctamente.', 'success');
     }
 
     function regenerarDistribucion() {
         if (!materiales.length || !fechasPlan.length) { toast('Primero genera el plan.', 'error'); return; }
-        if (!confirm('Â¿Redistribuir las cantidades? Se perderÃ¡n tus ediciones del plan y el avance real registrado.')) return;
+        if (!confirm('¿Redistribuir las cantidades? Se perderán tus ediciones del plan y el avance real registrado.')) return;
         generarPlan();
     }
 
@@ -883,16 +883,16 @@
         $('statsGrid').innerHTML = `
             <div class="stat"><div class="k">Materiales</div><div class="v">${planGenerado.length}</div><div class="s">tipos distintos</div></div>
             <div class="stat"><div class="k">Total unidades</div><div class="v">${totalUnd.toLocaleString('es-ES')}</div><div class="s">suma del plan</div></div>
-            <div class="stat"><div class="k">DÃ­as laborables</div><div class="v">${nDias}</div><div class="s">Lunâ€“SÃ¡b</div></div>
-            <div class="stat"><div class="k">Fecha fin</div><div class="v" style="font-size:1.05rem">${fin ? esc(fin.fecha) : 'â€”'}</div><div class="s">${fin ? esc(fin.dia) : ''}</div></div>
-            <div class="stat"><div class="k">Promedio diario</div><div class="v">${nDias ? (totalUnd / nDias).toLocaleString('es-ES', { maximumFractionDigits: 1 }) : '0'}</div><div class="s">unidades / dÃ­a</div></div>`;
+            <div class="stat"><div class="k">Días laborables</div><div class="v">${nDias}</div><div class="s">Lun–Sáb</div></div>
+            <div class="stat"><div class="k">Fecha fin</div><div class="v" style="font-size:1.05rem">${fin ? esc(fin.fecha) : '—'}</div><div class="s">${fin ? esc(fin.dia) : ''}</div></div>
+            <div class="stat"><div class="k">Promedio diario</div><div class="v">${nDias ? (totalUnd / nDias).toLocaleString('es-ES', { maximumFractionDigits: 1 }) : '0'}</div><div class="s">unidades / día</div></div>`;
     }
 
     function renderizarTabla() {
         const thead = $('tablaHead'), tbody = $('tablaBody'), tfoot = $('tablaFoot');
-        let h = '<tr><th>#</th><th>Fecha</th><th>DÃ­a</th>';
+        let h = '<tr><th>#</th><th>Fecha</th><th>Día</th>';
         planGenerado.forEach(m => { h += `<th>${esc(m.nombre)}${m.unidad ? `<br><small style="font-weight:400;opacity:.85">(${esc(m.unidad)})</small>` : ''}</th>`; });
-        h += '<th>Total dÃ­a</th></tr>';
+        h += '<th>Total día</th></tr>';
         thead.innerHTML = h;
 
         let b = '';
@@ -938,7 +938,7 @@
         guardarLocal();
     }
 
-    // ---------- GrÃ¡fico de avance diario ----------
+    // ---------- Gráfico de avance diario ----------
     let chartAvance = null;
     const cortePlugin = {
         id: 'lineaCorte',
@@ -995,10 +995,10 @@
         if (!cv) return;
         if (!fechasPlan.length || !planGenerado.length) return;
         const badge = $('badgeDiasGrafico');
-        if (badge) badge.textContent = `${fechasPlan.length} dÃ­as â€¢ ${planGenerado.length} material(es)`;
+        if (badge) badge.textContent = `${fechasPlan.length} días • ${planGenerado.length} material(es)`;
         if (typeof Chart === 'undefined') {
             const h = $('graficoHint');
-            if (h) h.textContent = 'âš  Sin conexiÃ³n: no se pudo cargar Chart.js para el grÃ¡fico. La tabla y el Excel siguen funcionando.';
+            if (h) h.textContent = '⚠ Sin conexión: no se pudo cargar Chart.js para el gráfico. La tabla y el Excel siguen funcionando.';
             return;
         }
 
@@ -1008,7 +1008,7 @@
         const miSel = filtro === 'todos' ? -1 : parseInt(filtro, 10);
 
         const labels = fechasPlan.map(f => f.fecha.slice(0, 5));
-        const full = fechasPlan.map((f, i) => `DÃ­a ${i + 1} â€¢ ${f.fecha} (${f.dia})`);
+        const full = fechasPlan.map((f, i) => `Día ${i + 1} • ${f.fecha} (${f.dia})`);
         const totales = fechasPlan.map((_, i) => totalColumna(i));
         const acumTotal = acumulado(totales);
         const gran = acumTotal.length ? acumTotal[acumTotal.length - 1] : 0;
@@ -1076,14 +1076,14 @@
                 ];
             }
         } else {
-            // total por dÃ­a + acumulado
+            // total por día + acumulado
             if (miSel >= 0 && planGenerado[miSel]) {
                 const d = serieDiaria(miSel);
                 const ac = acumulado(d);
-                datasets = [{ type: 'bar', label: planGenerado[miSel].nombre + ' por dÃ­a', data: d, backgroundColor: hexA(PALETA[miSel % PALETA.length], 0.85), borderRadius: 4 }];
+                datasets = [{ type: 'bar', label: planGenerado[miSel].nombre + ' por día', data: d, backgroundColor: hexA(PALETA[miSel % PALETA.length], 0.85), borderRadius: 4 }];
                 if (conAcum) datasets.push({ type: 'line', label: 'Acumulado', data: ac, borderColor: '#0f172a', backgroundColor: '#0f172a', borderWidth: 2, pointRadius: 2, tension: 0.25, yAxisID: 'y1' });
             } else {
-                datasets = [{ type: 'bar', label: 'Total por dÃ­a', data: totales, backgroundColor: hexA('#2563eb', 0.85), borderRadius: 4 }];
+                datasets = [{ type: 'bar', label: 'Total por día', data: totales, backgroundColor: hexA('#2563eb', 0.85), borderRadius: 4 }];
                 if (conAcum) datasets.push({ type: 'line', label: 'Acumulado', data: acumTotal, borderColor: '#0f172a', backgroundColor: '#0f172a', borderWidth: 2, pointRadius: 2, tension: 0.25, yAxisID: 'y1' });
             }
         }
@@ -1124,7 +1124,7 @@
             const eC = (miSel >= 0 && planGenerado[miSel]) ? esperadoCortePorIndice(miSel) : planGenerado.reduce((a, _, mi) => a + esperadoCortePorIndice(mi), 0);
             const rC = (miSel >= 0 && reales[miSel]) ? realCortePorIndice(miSel) : planGenerado.reduce((a, _, mi) => a + realCortePorIndice(mi), 0);
             const pcC = eC ? (rC / eC * 100) : 0;
-            hint.textContent = `âš– ${quien}: plan ${p.toLocaleString('es-ES')} â€¢ real ${r.toLocaleString('es-ES')} â€¢ cumplimiento ${pc.toFixed(1)}% â€¢ desviaciÃ³n ${(dv >= 0 ? '+' : '') + dv.toLocaleString('es-ES')} â€¢ cumplidas ${dc}/${fechasPlan.length} â€¢ corte ${corteEtiqueta()}: esp. ${eC.toLocaleString('es-ES')} / real ${rC.toLocaleString('es-ES')} (${pcC.toFixed(1)}%)`;
+            hint.textContent = `⚖ ${quien}: plan ${p.toLocaleString('es-ES')} • real ${r.toLocaleString('es-ES')} • cumplimiento ${pc.toFixed(1)}% • desviación ${(dv >= 0 ? '+' : '') + dv.toLocaleString('es-ES')} • cumplidas ${dc}/${fechasPlan.length} • corte ${corteEtiqueta()}: esp. ${eC.toLocaleString('es-ES')} / real ${rC.toLocaleString('es-ES')} (${pcC.toFixed(1)}%)`;
         } else if (hint) {
             const base = (miSel >= 0 && planGenerado[miSel]) ? serieDiaria(miSel) : totales;
             if (base.length) {
@@ -1132,7 +1132,7 @@
                 base.forEach((v, i) => { if (v > base[iMax]) iMax = i; if (v < base[iMin]) iMin = i; });
                 const prom = base.reduce((a, b) => a + b, 0) / base.length;
                 const quien = (miSel >= 0 && planGenerado[miSel]) ? planGenerado[miSel].nombre : 'todos los materiales';
-                hint.textContent = `ðŸ“Œ ${quien}: pico ${base[iMax].toLocaleString('es-ES')} el ${fechasPlan[iMax].fecha} â€¢ valle ${base[iMin].toLocaleString('es-ES')} el ${fechasPlan[iMin].fecha} â€¢ promedio ${prom.toLocaleString('es-ES', { maximumFractionDigits: 1 })}/dÃ­a â€¢ total ${gran.toLocaleString('es-ES')}`;
+                hint.textContent = `📌 ${quien}: pico ${base[iMax].toLocaleString('es-ES')} el ${fechasPlan[iMax].fecha} • valle ${base[iMin].toLocaleString('es-ES')} el ${fechasPlan[iMin].fecha} • promedio ${prom.toLocaleString('es-ES', { maximumFractionDigits: 1 })}/día • total ${gran.toLocaleString('es-ES')}`;
             } else hint.textContent = '';
         }
 
@@ -1154,8 +1154,8 @@
             const color = PALETA[i % PALETA.length];
             return `<div class="avance-card">
                 <div class="t"><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${color};margin-right:6px"></span>${esc(m.nombre)}</div>
-                <div class="m">${t.toLocaleString('es-ES')} ${esc(m.unidad || 'und')} â€¢ ${pctTotal.toFixed(1)}% del total</div>
-                <div class="m">Prom: ${prom.toLocaleString('es-ES', { maximumFractionDigits: 1 })}/dÃ­a â€¢ Pico: ${(Number(m.cantidades[iMax]) || 0).toLocaleString('es-ES')} (${fechasPlan[iMax] ? esc(fechasPlan[iMax].fecha) : 'â€”'})</div>
+                <div class="m">${t.toLocaleString('es-ES')} ${esc(m.unidad || 'und')} • ${pctTotal.toFixed(1)}% del total</div>
+                <div class="m">Prom: ${prom.toLocaleString('es-ES', { maximumFractionDigits: 1 })}/día • Pico: ${(Number(m.cantidades[iMax]) || 0).toLocaleString('es-ES')} (${fechasPlan[iMax] ? esc(fechasPlan[iMax].fecha) : '—'})</div>
                 <div class="bar"><div style="width:${pctBar}%"></div></div>
             </div>`;
         }).join('');
@@ -1167,11 +1167,11 @@
         a.download = nombreArchivo('png');
         a.href = chartAvance.toBase64Image('image/png', 1);
         a.click();
-        toast('GrÃ¡fico descargado.', 'success');
+        toast('Gráfico descargado.', 'success');
     }
 
     // ---------- Seguimiento real vs planificado ----------
-    // LÃ³gica INVERTIDA: solo cuenta lo marcado como cumplido. Lo precargado
+    // Lógica INVERTIDA: solo cuenta lo marcado como cumplido. Lo precargado
     // pero sin marcar es pendiente (no suma al avance y genera atraso).
     function totalRealDia(di) {
         if (!cumplidas[di]) return 0;
@@ -1210,9 +1210,9 @@
     }
     function corteEtiqueta() {
         const idx = corteIdx();
-        if (!fechasPlan.length) return 'â€”';
+        if (!fechasPlan.length) return '—';
         if (idx < 0) return `${corteISO()} (antes del inicio)`;
-        return `${fechasPlan[idx].fecha} (dÃ­a ${idx + 1} de ${fechasPlan.length})`;
+        return `${fechasPlan[idx].fecha} (día ${idx + 1} de ${fechasPlan.length})`;
     }
     function esperadoCortePorIndice(mi) {
         const idx = corteIdx();
@@ -1240,9 +1240,9 @@
     }
     function nivelDe(pct, esperado) {
         if (!esperado) return { nivel: 'na', txt: 'Sin plan a la corte', color: '#64748b' };
-        if (pct >= 100) return { nivel: 'ok', txt: 'Adelantado / al dÃ­a', color: '#10b981' };
+        if (pct >= 100) return { nivel: 'ok', txt: 'Adelantado / al día', color: '#10b981' };
         if (pct >= 90) return { nivel: 'leve', txt: 'Leve atraso', color: '#f59e0b' };
-        return { nivel: 'crit', txt: 'Atraso crÃ­tico', color: '#ef4444' };
+        return { nivel: 'crit', txt: 'Atraso crítico', color: '#ef4444' };
     }
     function estadoMaterialCorte(mi) {
         const esperado = esperadoCortePorIndice(mi);
@@ -1290,7 +1290,7 @@
     }
     function copiarPlanAReal() {
         if (!planGenerado.length) { toast('Primero genera el plan.', 'error'); return; }
-        if (!confirm('Â¿Copiar todo el plan vigente a los valores reales?')) return;
+        if (!confirm('¿Copiar todo el plan vigente a los valores reales?')) return;
         reales = planGenerado.map(m => ({ id: m.id, cantidades: m.cantidades.map(v => Number(v) || 0) }));
         realPrefill = true;
         guardarLocal(); renderizarSeguimiento(); actualizarGrafico();
@@ -1298,7 +1298,7 @@
     }
     function limpiarReales() {
         if (!reales.length) return;
-        if (!confirm('Â¿Borrar todos los valores reales ingresados?')) return;
+        if (!confirm('¿Borrar todos los valores reales ingresados?')) return;
         reales = planGenerado.map(m => ({ id: m.id, cantidades: m.cantidades.map(() => 0) }));
         guardarLocal(); renderizarSeguimiento(); actualizarGrafico();
     }
@@ -1332,7 +1332,7 @@
         if (badge) badge.textContent = `${pct.toFixed(1)}% cumplido`;
 
         const ci = $('corteInfo');
-        if (ci) ci.textContent = `Corte: ${corteEtiqueta()} â€¢ Plan a la corte: ${planCorte.toLocaleString('es-ES')} â€¢ Real a la corte: ${realCorte.toLocaleString('es-ES')} â€¢ ${pctCorte.toFixed(1)}%`;
+        if (ci) ci.textContent = `Corte: ${corteEtiqueta()} • Plan a la corte: ${planCorte.toLocaleString('es-ES')} • Real a la corte: ${realCorte.toLocaleString('es-ES')} • ${pctCorte.toFixed(1)}%`;
 
         const stats = $('segStats');
         if (stats) stats.innerHTML = `
@@ -1340,8 +1340,8 @@
             <div class="stat"><div class="k">Avance real</div><div class="v">${totalReal.toLocaleString('es-ES')}</div><div class="s">confirmado (solo cumplidas)</div></div>
             <div class="stat"><div class="k">Plan total</div><div class="v">${totalPlan.toLocaleString('es-ES')}</div><div class="s">unidades planificadas</div></div>
             <div class="stat"><div class="k">Cumplimiento</div><div class="v">${pct.toFixed(1)}%</div><div class="s">real / plan</div></div>
-            <div class="stat"><div class="k">DesviaciÃ³n</div><div class="v">${desv >= 0 ? '+' : ''}${desv.toLocaleString('es-ES')}</div><div class="s">real âˆ’ plan</div></div>
-            <div class="stat"><div class="k">Plan a la corte</div><div class="v">${planCorte.toLocaleString('es-ES')}</div><div class="s">esperado hasta ${idxC >= 0 ? esc(fechasPlan[idxC].fecha) : 'â€”'}</div></div>
+            <div class="stat"><div class="k">Desviación</div><div class="v">${desv >= 0 ? '+' : ''}${desv.toLocaleString('es-ES')}</div><div class="s">real − plan</div></div>
+            <div class="stat"><div class="k">Plan a la corte</div><div class="v">${planCorte.toLocaleString('es-ES')}</div><div class="s">esperado hasta ${idxC >= 0 ? esc(fechasPlan[idxC].fecha) : '—'}</div></div>
             <div class="stat"><div class="k">Real a la corte</div><div class="v">${realCorte.toLocaleString('es-ES')}</div><div class="s">${pctCorte.toFixed(1)}% de lo esperado</div></div>`;
 
         const ab = $('alertBox');
@@ -1352,32 +1352,32 @@
             const boxCls = crits.length ? 'crit' : (leves.length ? 'leve' : 'ok');
             let h = '';
             if (idxC < 0) {
-                h = `<div class="t">ðŸ“ La fecha de corte es anterior al inicio del plan.</div><div class="hint">AÃºn no hay avance esperado a la corte.</div>`;
+                h = `<div class="t">📍 La fecha de corte es anterior al inicio del plan.</div><div class="hint">Aún no hay avance esperado a la corte.</div>`;
             } else if (!crits.length && !leves.length) {
-                h = `<div class="t">âœ… Todos los materiales al dÃ­a a la corte (${corteEtiqueta()}).</div>`;
+                h = `<div class="t">✅ Todos los materiales al día a la corte (${corteEtiqueta()}).</div>`;
             } else {
-                const peor = crits.length ? crits.length + ' en atraso crÃ­tico' : '';
+                const peor = crits.length ? crits.length + ' en atraso crítico' : '';
                 const lv = leves.length ? leves.length + ' con leve atraso' : '';
-                h = `<div class="t">ðŸš¨ Alertas de atraso a la corte (${corteEtiqueta()}): ${[peor, lv].filter(Boolean).join(' â€¢ ')}</div>`;
+                h = `<div class="t">🚨 Alertas de atraso a la corte (${corteEtiqueta()}): ${[peor, lv].filter(Boolean).join(' • ')}</div>`;
                 [...crits, ...leves].forEach(e => {
-                    const det = e.vencidos ? ` â€¢ ${e.vencidos} dÃ­a(s) vencido(s) sin confirmar` : '';
-                    h += `<div class="alert-item"><span class="dot" style="background:${e.color}"></span><span><strong>${esc(e.m.nombre)}</strong> â€” ${e.txt}: esperado ${e.esperado.toLocaleString('es-ES')}, real ${e.real.toLocaleString('es-ES')} (${e.pct.toFixed(1)}%, ${difFmt(e.dif)})${det}</span></div>`;
+                    const det = e.vencidos ? ` • ${e.vencidos} día(s) vencido(s) sin confirmar` : '';
+                    h += `<div class="alert-item"><span class="dot" style="background:${e.color}"></span><span><strong>${esc(e.m.nombre)}</strong> — ${e.txt}: esperado ${e.esperado.toLocaleString('es-ES')}, real ${e.real.toLocaleString('es-ES')} (${e.pct.toFixed(1)}%, ${difFmt(e.dif)})${det}</span></div>`;
                 });
             }
             ab.className = 'alert-box ' + boxCls;
             ab.innerHTML = h;
             if (badge) {
-                if (crits.length) { badge.className = 'badge warn'; badge.textContent = `âš  ${crits.length} atraso(s) crÃ­tico(s) â€¢ ${pct.toFixed(1)}%`; }
-                else if (leves.length) { badge.className = 'badge warn'; badge.textContent = `âš  ${leves.length} leve(s) â€¢ ${pct.toFixed(1)}%`; }
+                if (crits.length) { badge.className = 'badge warn'; badge.textContent = `⚠ ${crits.length} atraso(s) crítico(s) • ${pct.toFixed(1)}%`; }
+                else if (leves.length) { badge.className = 'badge warn'; badge.textContent = `⚠ ${leves.length} leve(s) • ${pct.toFixed(1)}%`; }
                 else { badge.className = 'badge ok'; badge.textContent = `${pct.toFixed(1)}% cumplido`; }
             }
         }
 
         const head = $('segHead');
         if (head) {
-            let h = '<tr><th>#</th><th>Fecha</th><th>DÃ­a</th><th>Estado</th>';
+            let h = '<tr><th>#</th><th>Fecha</th><th>Día</th><th>Estado</th>';
             planGenerado.forEach(m => { h += `<th>${esc(m.nombre)}${m.unidad ? `<br><small style="font-weight:400;opacity:.8">(${esc(m.unidad)})</small>` : ''}</th>`; });
-            h += '<th>Plan dÃ­a</th><th>Real dÃ­a</th><th>% dÃ­a</th></tr>';
+            h += '<th>Plan día</th><th>Real día</th><th>% día</th></tr>';
             head.innerHTML = h;
         }
 
@@ -1388,7 +1388,7 @@
                 const e = estadoDia(i);
                 const cls = e.cumplida ? 'cumplida' : (e.atrasada ? 'atrasada' : '');
                 const btnCls = e.cumplida ? 'pill ok' : (e.atrasada ? 'pill atras' : (e.esHoy ? 'pill hoy' : 'pill pend'));
-                const btnTxt = e.cumplida ? 'âœ“ Cumplida' : (e.atrasada ? 'âš  Atrasada â€” marcar' : (e.esHoy ? 'â— Hoy â€” marcar' : 'Marcar'));
+                const btnTxt = e.cumplida ? '✓ Cumplida' : (e.atrasada ? '⚠ Atrasada — marcar' : (e.esHoy ? '● Hoy — marcar' : 'Marcar'));
                 b += `<tr class="${cls}"><td>${i + 1}</td><td><strong>${esc(f.fecha)}</strong></td><td>${esc(f.dia)}</td>`;
                 b += `<td><button class="${btnCls}" onclick="toggleCumplida(${i})" title="Clic para ${e.cumplida ? 'desmarcar' : 'marcar como cumplida'}">${btnTxt}</button></td>`;
                 planGenerado.forEach((m, mi) => {
@@ -1430,11 +1430,11 @@
                 const pillCls = ec.nivel === 'crit' ? 'pill atras' : (ec.nivel === 'leve' ? 'pill hoy' : (ec.nivel === 'ok' ? 'pill ok' : 'pill pend'));
                 return `<div class="avance-card">
                     <div class="t"><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${color};margin-right:6px"></span>${esc(m.nombre)}</div>
-                    <div class="m">Plan: ${pt.toLocaleString('es-ES')} â€¢ Real: ${rt.toLocaleString('es-ES')} â€¢ ${difFmt(rt - pt)}</div>
+                    <div class="m">Plan: ${pt.toLocaleString('es-ES')} • Real: ${rt.toLocaleString('es-ES')} • ${difFmt(rt - pt)}</div>
                     <div class="m">Cumplimiento: <strong>${pt ? (rt / pt * 100).toFixed(1) : '0.0'}%</strong></div>
                     <div class="bar"><div style="width:${Math.max(2, p)}%"></div></div>
-                    <div class="m" style="margin-top:8px">A la corte: esp. ${ec.esperado.toLocaleString('es-ES')} â€¢ real ${ec.real.toLocaleString('es-ES')} â€¢ <strong>${ec.esperado ? ec.pct.toFixed(1) : 'â€”'}%</strong></div>
-                    <div style="margin-top:6px"><span class="${pillCls}">${ec.nivel === 'na' ? 'Sin plan a la corte' : (ec.nivel === 'ok' ? 'âœ… ' : (ec.nivel === 'leve' ? 'âš  ' : 'ðŸš¨ ')) + esc(ec.txt)}${ec.vencidos ? ` â€¢ ${ec.vencidos} venc.` : ''}</span></div>
+                    <div class="m" style="margin-top:8px">A la corte: esp. ${ec.esperado.toLocaleString('es-ES')} • real ${ec.real.toLocaleString('es-ES')} • <strong>${ec.esperado ? ec.pct.toFixed(1) : '—'}%</strong></div>
+                    <div style="margin-top:6px"><span class="${pillCls}">${ec.nivel === 'na' ? 'Sin plan a la corte' : (ec.nivel === 'ok' ? '✅ ' : (ec.nivel === 'leve' ? '⚠ ' : '🚨 ')) + esc(ec.txt)}${ec.vencidos ? ` • ${ec.vencidos} venc.` : ''}</span></div>
                 </div>`;
             }).join('');
         }
@@ -1451,7 +1451,7 @@
         });
         if (!diffs.length) { badge.style.display = 'none'; return; }
         badge.style.display = '';
-        badge.textContent = 'âš  Editado: ' + diffs.join(' â€¢ ');
+        badge.textContent = '⚠ Editado: ' + diffs.join(' • ');
         badge.title = 'Totales editados difieren del plan original';
     }
 
@@ -1469,7 +1469,7 @@
     }
 
     function matrizPlan() {
-        const header = ['#', 'Fecha', 'DÃ­a', ...planGenerado.map(m => m.unidad ? `${m.nombre} (${m.unidad})` : m.nombre), 'TOTAL DÃA'];
+        const header = ['#', 'Fecha', 'Día', ...planGenerado.map(m => m.unidad ? `${m.nombre} (${m.unidad})` : m.nombre), 'TOTAL DÍA'];
         const rows = fechasPlan.map((f, i) => {
             const r = [i + 1, f.fecha, f.dia];
             planGenerado.forEach(m => r.push(Number(m.cantidades[i]) || 0));
@@ -1481,22 +1481,22 @@
 
     function exportarExcel() {
         if (!fechasPlan.length || !planGenerado.length) { toast('Primero genera el plan.', 'error'); return; }
-        if (typeof XLSX === 'undefined') { toast('No se pudo cargar la librerÃ­a Excel (sin internet).', 'error'); return; }
+        if (typeof XLSX === 'undefined') { toast('No se pudo cargar la librería Excel (sin internet).', 'error'); return; }
         try {
             const { header, rows } = matrizPlan();
             const hoy = new Date().toLocaleDateString('es-ES');
             const datos = [];
-            datos.push([`Plan de Ingreso de Materiales â€” generado ${hoy}`]);
-            datos.push(['Desde:', fechasPlan[0].fecha, 'Hasta:', fechasPlan[fechasPlan.length - 1].fecha, 'DÃ­as:', fechasPlan.length, 'Modo:', etiquetaModo()]);
+            datos.push([`Plan de Ingreso de Materiales — generado ${hoy}`]);
+            datos.push(['Desde:', fechasPlan[0].fecha, 'Hasta:', fechasPlan[fechasPlan.length - 1].fecha, 'Días:', fechasPlan.length, 'Modo:', etiquetaModo()]);
             datos.push([]);
             datos.push(header);
             rows.forEach(r => datos.push(r));
 
-            // Fila de totales con FÃ“RMULAS (se recalculan en Excel)
-            const primeraFilaDatos = 5; // 1-based: header estÃ¡ en fila 4
+            // Fila de totales con FÓRMULAS (se recalculan en Excel)
+            const primeraFilaDatos = 5; // 1-based: header está en fila 4
             const ultimaFilaDatos = 4 + rows.length;
             const filaTotales = ['', '', 'TOTALES'];
-            const colInicioMateriales = 4; // D = 4ta columna (1-based: #=1, Fecha=2, DÃ­a=3, mat1=4)
+            const colInicioMateriales = 4; // D = 4ta columna (1-based: #=1, Fecha=2, Día=3, mat1=4)
             planGenerado.forEach((_, k) => {
                 const col = colLetra(colInicioMateriales - 1 + k);
                 filaTotales.push({ f: `SUM(${col}${primeraFilaDatos}:${col}${ultimaFilaDatos})` });
@@ -1522,17 +1522,17 @@
             // Hoja Resumen (ahora con avance real)
             const totalGral = planGenerado.reduce((a, m) => a + totalMaterial(m), 0);
             const totalRealGral = totalRealConfirmado();
-            const resumen = [['Material', 'Unidad', 'Plan', 'Real', 'Dif (R-P)', '% cumpl.', 'Esperado corte', 'Real corte', '% corte', 'Estado corte', 'Prom plan/dÃ­a', '% del plan']];
+            const resumen = [['Material', 'Unidad', 'Plan', 'Real', 'Dif (R-P)', '% cumpl.', 'Esperado corte', 'Real corte', '% corte', 'Estado corte', 'Prom plan/día', '% del plan']];
             planGenerado.forEach((m, mi) => {
                 const t = totalMaterial(m);
                 const r = totalRealMaterialPorIndice(mi);
                 const eC = esperadoCortePorIndice(mi), rC = realCortePorIndice(mi);
                 const pC = eC ? +((rC / eC) * 100).toFixed(1) : 0;
-                resumen.push([m.nombre, m.unidad || 'â€”', t, r, r - t, t ? +((r / t) * 100).toFixed(1) : 0, eC, rC, pC, nivelDe(pC, eC).txt, fechasPlan.length ? +(t / fechasPlan.length).toFixed(1) : 0, totalGral ? +((t / totalGral) * 100).toFixed(1) : 0]);
+                resumen.push([m.nombre, m.unidad || '—', t, r, r - t, t ? +((r / t) * 100).toFixed(1) : 0, eC, rC, pC, nivelDe(pC, eC).txt, fechasPlan.length ? +(t / fechasPlan.length).toFixed(1) : 0, totalGral ? +((t / totalGral) * 100).toFixed(1) : 0]);
             });
             const planCorteTot = planGenerado.reduce((a, _, mi) => a + esperadoCortePorIndice(mi), 0);
             const realCorteTot = planGenerado.reduce((a, _, mi) => a + realCortePorIndice(mi), 0);
-            resumen.push(['TOTAL', 'â€”', totalGral, totalRealGral, totalRealGral - totalGral, totalGral ? +((totalRealGral / totalGral) * 100).toFixed(1) : 0, planCorteTot, realCorteTot, planCorteTot ? +((realCorteTot / planCorteTot) * 100).toFixed(1) : 0, nivelDe(planCorteTot ? (realCorteTot / planCorteTot * 100) : 0, planCorteTot).txt, fechasPlan.length ? +((totalGral / fechasPlan.length).toFixed(1)) : 0, 100]);
+            resumen.push(['TOTAL', '—', totalGral, totalRealGral, totalRealGral - totalGral, totalGral ? +((totalRealGral / totalGral) * 100).toFixed(1) : 0, planCorteTot, realCorteTot, planCorteTot ? +((realCorteTot / planCorteTot) * 100).toFixed(1) : 0, nivelDe(planCorteTot ? (realCorteTot / planCorteTot * 100) : 0, planCorteTot).txt, fechasPlan.length ? +((totalGral / fechasPlan.length).toFixed(1)) : 0, 100]);
             const ws2 = XLSX.utils.aoa_to_sheet(resumen);
             ws2['!cols'] = [{ wch: 24 }, { wch: 14 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 10 }, { wch: 14 }, { wch: 12 }, { wch: 10 }, { wch: 16 }, { wch: 14 }, { wch: 12 }];
             ws2['!freeze'] = 'A2';
@@ -1540,7 +1540,7 @@
 
             // Hoja Avance Real vs Planificado
             const diasCumpl = cumplidas.filter(Boolean).length;
-            const avHead = ['#', 'Fecha', 'DÃ­a', 'Estado'];
+            const avHead = ['#', 'Fecha', 'Día', 'Estado'];
             planGenerado.forEach(m => { avHead.push(`${m.nombre} Plan`, `${m.nombre} Real`, `${m.nombre} Dif`); });
             avHead.push('Total Plan', 'Total Real', 'Total Dif', '% Cumpl.');
             const avRows = fechasPlan.map((f, i) => {
@@ -1555,7 +1555,7 @@
                 return r;
             });
             const avDatos = [];
-            avDatos.push([`Avance Real vs Planificado â€” generado ${hoy}`]);
+            avDatos.push([`Avance Real vs Planificado — generado ${hoy}`]);
             const planCorteXl = planGenerado.reduce((a, _, mi) => a + esperadoCortePorIndice(mi), 0);
             const realCorteXl = planGenerado.reduce((a, _, mi) => a + realCortePorIndice(mi), 0);
             avDatos.push(['Desde:', fechasPlan[0].fecha, 'Hasta:', fechasPlan[fechasPlan.length - 1].fecha, 'Cumplidas:', `${diasCumpl}/${fechasPlan.length}`, 'Real:', totalRealGral, 'Plan:', totalGral, 'Corte:', corteEtiqueta(), '% corte:', planCorteXl ? +((realCorteXl / planCorteXl) * 100).toFixed(1) : 0]);
@@ -1601,7 +1601,7 @@
             return /[;"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
         }).join(';');
         const totales = ['', '', 'TOTALES', ...planGenerado.map(totalMaterial), planGenerado.reduce((a, m) => a + totalMaterial(m), 0)];
-        const csv = 'ï»¿' + [header, ...rows, totales].map(linea).join('\n');
+        const csv = '﻿' + [header, ...rows, totales].map(linea).join('\n');
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -1647,7 +1647,7 @@
                 });
                 guardarLocal(); renderizarListaMateriales(); actualizarFechaFinEstimada();
                 toast(`${n} materiales importados.`, 'success');
-            } catch (e) { toast('Archivo JSON invÃ¡lido.', 'error'); }
+            } catch (e) { toast('Archivo JSON inválido.', 'error'); }
             ev.target.value = '';
         };
         rd.readAsText(f);
@@ -1660,10 +1660,10 @@
     function setNubeEstado(e) {
         const b = $('badgeNube');
         if (!b) return;
-        if (e === 'ok') { b.className = 'badge ok'; b.textContent = 'â˜ Sincronizado'; }
-        else if (e === 'pendiente') { b.className = 'badge warn'; b.textContent = 'â— Cambios por guardarâ€¦'; }
-        else if (e === 'guardando') { b.className = 'badge warn'; b.textContent = 'â³ Guardandoâ€¦'; }
-        else if (e === 'error') { b.className = 'badge warn'; b.textContent = 'âš  Error de nube (modo local)'; }
+        if (e === 'ok') { b.className = 'badge ok'; b.textContent = '☁ Sincronizado'; }
+        else if (e === 'pendiente') { b.className = 'badge warn'; b.textContent = '● Cambios por guardar…'; }
+        else if (e === 'guardando') { b.className = 'badge warn'; b.textContent = '⏳ Guardando…'; }
+        else if (e === 'error') { b.className = 'badge warn'; b.textContent = '⚠ Error de nube (modo local)'; }
         else { b.className = 'badge'; b.textContent = 'Modo local'; }
     }
     function actualizaNubeUI() {
@@ -1674,12 +1674,12 @@
         if (btnSalir) btnSalir.style.display = email ? '' : 'none';
         if (!nubeConfigurada()) {
             setNubeEstado('local');
-            if (hint) hint.textContent = 'Tus datos viven en este navegador. Para activar la nube, pega tu URL y ANON KEY de Supabase en el archivo (lÃ­neas marcadas con â˜).';
+            if (hint) hint.textContent = 'Tus datos viven en este navegador. Para activar la nube, pega tu URL y ANON KEY de Supabase en el archivo (líneas marcadas con ☁).';
         } else if (email) {
             if (hint) hint.textContent = `Conectado como ${email}. Tus cambios se respaldan solos; entra con el mismo correo en otro dispositivo para verlos.`;
         } else {
             setNubeEstado('local');
-            if (hint) hint.textContent = 'Nube lista. Entra con tu correo (te llega un enlace mÃ¡gico, sin contraseÃ±a).';
+            if (hint) hint.textContent = 'Nube lista. Entra con tu correo (te llega un enlace mágico, sin contraseña).';
         }
     }
     async function initNube() {
@@ -1706,17 +1706,17 @@
     async function entrarNube() {
         if (!nube.client) { toast('Primero pega tus claves de Supabase en el archivo.', 'error'); return; }
         const email = (($('nubeEmail') && $('nubeEmail').value) || '').trim();
-        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo vÃ¡lido.', 'error'); return; }
+        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo válido.', 'error'); return; }
         setNubeEstado('guardando');
         const { error } = await nube.client.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
         if (error) { setNubeEstado('error'); toast('Error: ' + error.message, 'error'); }
-        else { setNubeEstado('local'); toast('Revisa tu correo y abre el enlace mÃ¡gico.', 'success'); }
+        else { setNubeEstado('local'); toast('Revisa tu correo y abre el enlace mágico.', 'success'); }
     }
     async function salirNube() {
         try { if (nube.client) await nube.client.auth.signOut(); } catch (e) { /* noop */ }
         nube.user = null;
         actualizaNubeUI();
-        toast('SesiÃ³n cerrada. Sigues en modo local.', 'info');
+        toast('Sesión cerrada. Sigues en modo local.', 'info');
     }
     function datosParaNube() {
         return { materiales, planGenerado, fechasPlan, modoUsado, totalesPlanificados, reales, cumplidas, fechaCorte, variacion, realPrefill };
@@ -1733,7 +1733,7 @@
         } catch (e) {
             console.error(e);
             setNubeEstado('error');
-            if (manual) toast('No se pudo subir. Revisa tu conexiÃ³n.', 'error');
+            if (manual) toast('No se pudo subir. Revisa tu conexión.', 'error');
         }
     }
     async function pullNube() {
