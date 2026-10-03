@@ -242,12 +242,17 @@
         <h2>☁ Respaldo en la nube <span class="badge" id="badgeNube">Modo local</span></h2>
         <div class="hint" id="nubeHint">Tus datos viven en este navegador. Conecta Supabase para respaldarlos y verlos en otros dispositivos.</div>
         <div class="form-row" id="nubeLoginRow" style="margin-top:12px">
+            <div class="form-group" style="flex:1;min-width:200px;max-width:260px">
+                <button class="btn-primary" onclick="abrirLogin()" style="width:100%">🔑 Iniciar sesión</button>
+            </div>
+        </div>
+        <div class="form-row" id="nubeCuentaRow" style="margin-top:12px;display:none">
             <div class="form-group" style="flex:2;min-width:200px">
-                <label for="nubeEmail">Correo para entrar (enlace mágico, sin contraseña)</label>
-                <input type="email" id="nubeEmail" placeholder="tu@correo.com" autocomplete="email">
+                <label for="nubePass">Cambiar contraseña (mínimo 6 caracteres)</label>
+                <input type="password" id="nubePass" placeholder="Nueva contraseña" autocomplete="new-password" minlength="6">
             </div>
             <div class="form-group" style="display:flex;align-items:flex-end;min-width:160px">
-                <button class="btn-primary" onclick="entrarNube()" style="width:100%">✉ Enviar enlace</button>
+                <button class="btn-secondary btn-small" onclick="cambiarClave()" style="width:100%">Cambiar clave</button>
             </div>
         </div>
         <div class="toolbar">
@@ -427,9 +432,11 @@
     <div class="login-card">
         <div style="font-size:2.2rem">📦</div>
         <h1>Planificador de Materiales</h1>
-        <p>Tu plan en la nube, en todos tus dispositivos.<br>Entra con tu correo (enlace mágico, sin contraseña).</p>
+        <p>Tu plan en la nube, en todos tus dispositivos.<br>Entra con tu correo y contraseña. Sin correos, sin enlaces.</p>
         <input type="email" id="loginEmail" placeholder="tu@correo.com" autocomplete="email" onkeypress="if(event.key==='Enter')entrarDesdePanel()">
-        <button class="btn-primary" onclick="entrarDesdePanel()">✉ Enviar enlace de acceso</button>
+        <input type="password" id="loginPass" placeholder="Contraseña (mínimo 6 caracteres)" autocomplete="current-password" onkeypress="if(event.key==='Enter')entrarDesdePanel()">
+        <button class="btn-primary" onclick="entrarDesdePanel()">🔑 Entrar</button>
+        <div style="margin-top:10px"><button class="btn-secondary btn-small" onclick="crearCuentaDesdePanel()" style="width:100%">Crear cuenta nueva</button></div>
         <div class="login-div">o</div>
         <button class="btn-ghost btn-small" onclick="entrarSinCuenta()">Entrar sin cuenta (solo este navegador)</button>
         <p style="font-size:.75rem;margin:14px 0 0">Cada correo ve únicamente su propia información.</p>
@@ -1688,19 +1695,20 @@
         else { b.className = 'badge'; b.textContent = 'Modo local'; }
     }
     function actualizaNubeUI() {
-        const loginRow = $('nubeLoginRow'), btnSync = $('btnSyncAhora'), btnSalir = $('btnSalirNube'), hint = $('nubeHint');
+        const loginRow = $('nubeLoginRow'), cuentaRow = $('nubeCuentaRow'), btnSync = $('btnSyncAhora'), btnSalir = $('btnSalirNube'), hint = $('nubeHint');
         const email = nube.user && nube.user.email ? nube.user.email : '';
         if (loginRow) loginRow.style.display = email ? 'none' : '';
+        if (cuentaRow) cuentaRow.style.display = email ? '' : 'none';
         if (btnSync) btnSync.style.display = email ? '' : 'none';
         if (btnSalir) btnSalir.style.display = email ? '' : 'none';
         if (!nubeConfigurada()) {
             setNubeEstado('local');
             if (hint) hint.textContent = 'Tus datos viven en este navegador. Para activar la nube, pega tu URL y ANON KEY de Supabase en el archivo (líneas marcadas con ☁).';
         } else if (email) {
-            if (hint) hint.textContent = `Conectado como ${email}. Tus cambios se respaldan solos; entra con el mismo correo en otro dispositivo para verlos.`;
+            if (hint) hint.textContent = `Conectado como ${email}. Tus cambios se respaldan solos; entra con el mismo correo y contraseña en otro dispositivo para verlos.`;
         } else {
             setNubeEstado('local');
-            if (hint) hint.textContent = 'Nube lista. Entra con tu correo (te llega un enlace mágico, sin contraseña).';
+            if (hint) hint.textContent = 'Nube lista. Inicia sesión con tu correo y contraseña.';
         }
     }
     async function initNube() {
@@ -1732,23 +1740,41 @@
     function mostrarLogin() { const p = $('panelLogin'); if (p && nubeConfigurada()) p.style.display = 'flex'; }
     function ocultarLogin() { const p = $('panelLogin'); if (p) p.style.display = 'none'; }
     function quiereSaltarLogin() { try { return localStorage.getItem(LS_SKIP) === '1'; } catch (e) { return false; } }
-    async function enviarEnlace(email) {
-        email = (email || '').trim();
-        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo válido.', 'error'); return false; }
-        if (!nube.client) { toast('Nube no disponible (modo local).', 'error'); return false; }
-        setNubeEstado('guardando');
-        const { error } = await nube.client.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
-        if (error) { setNubeEstado('error'); toast('Error: ' + error.message, 'error'); return false; }
-        setNubeEstado('local');
-        toast('Revisa tu correo y abre el enlace mágico.', 'success');
-        return true;
-    }
-    async function entrarNube() {
-        if (!nube.client) { toast('Primero pega tus claves de Supabase en el archivo.', 'error'); return; }
-        await enviarEnlace($('nubeEmail') && $('nubeEmail').value);
+    function leerCredenciales() {
+        const email = (($('loginEmail') && $('loginEmail').value) || '').trim();
+        const password = ($('loginPass') && $('loginPass').value) || '';
+        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo válido.', 'error'); return null; }
+        if (!password || password.length < 6) { toast('La contraseña debe tener mínimo 6 caracteres.', 'error'); return null; }
+        if (!nube.client) { toast('Nube no disponible (modo local).', 'error'); return null; }
+        return { email, password };
     }
     async function entrarDesdePanel() {
-        await enviarEnlace($('loginEmail') && $('loginEmail').value);
+        const c = leerCredenciales();
+        if (!c) return;
+        setNubeEstado('guardando');
+        const { error } = await nube.client.auth.signInWithPassword(c);
+        if (error) { setNubeEstado('error'); toast('No se pudo entrar: ' + error.message, 'error'); }
+        // Si entra, onAuthStateChange oculta el panel y trae tus datos.
+    }
+    async function crearCuentaDesdePanel() {
+        const c = leerCredenciales();
+        if (!c) return;
+        setNubeEstado('guardando');
+        const { error } = await nube.client.auth.signUp(c);
+        if (error) { setNubeEstado('error'); toast('No se pudo crear: ' + error.message, 'error'); }
+        else toast('Cuenta creada. Ya estás dentro.', 'success');
+    }
+    function abrirLogin() {
+        try { localStorage.removeItem(LS_SKIP); } catch (e) { /* noop */ }
+        mostrarLogin();
+    }
+    async function cambiarClave() {
+        const np = (($('nubePass') && $('nubePass').value) || '');
+        if (!np || np.length < 6) { toast('La nueva contraseña debe tener mínimo 6 caracteres.', 'error'); return; }
+        if (!nube.client || !nube.user) { toast('Inicia sesión primero.', 'error'); return; }
+        const { error } = await nube.client.auth.updateUser({ password: np });
+        if (error) toast('No se pudo cambiar: ' + error.message, 'error');
+        else { $('nubePass').value = ''; toast('Contraseña actualizada.', 'success'); }
     }
     function entrarSinCuenta() {
         try { localStorage.setItem(LS_SKIP, '1'); } catch (e) { /* noop */ }
