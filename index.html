@@ -197,6 +197,14 @@
         tr.atrasada { background: #fef2f2; }
         .seg-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
         .corte-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+        .login-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, rgba(37,99,235,.93), rgba(30,58,138,.95)); }
+        .login-card { background: #fff; border-radius: 18px; padding: 32px 28px; max-width: 400px; width: 100%; box-shadow: 0 25px 60px rgba(0,0,0,.35); text-align: center; }
+        .login-card h1 { margin: 0 0 6px; font-size: 1.5rem; color: var(--primary); }
+        .login-card p { color: var(--text-light); font-size: .9rem; margin: 0 0 18px; }
+        .login-card input { margin-bottom: 10px; text-align: center; }
+        .login-card .btn-primary { width: 100%; }
+        .login-div { display: flex; align-items: center; gap: 10px; color: var(--text-light); font-size: .8rem; margin: 14px 0; }
+        .login-div::before, .login-div::after { content: ''; flex: 1; height: 1px; background: var(--border); }
         .corte-row .form-group { min-width: 150px; max-width: 230px; }
         .alert-box { border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; border: 1px solid var(--border); background: #f8fafc; }
         .alert-box.crit { background: #fef2f2; border-color: #fecaca; }
@@ -414,6 +422,19 @@
 </div>
 
 <div id="toastContainer"></div>
+
+<div class="login-overlay" id="panelLogin" style="display:none">
+    <div class="login-card">
+        <div style="font-size:2.2rem">📦</div>
+        <h1>Planificador de Materiales</h1>
+        <p>Tu plan en la nube, en todos tus dispositivos.<br>Entra con tu correo (enlace mágico, sin contraseña).</p>
+        <input type="email" id="loginEmail" placeholder="tu@correo.com" autocomplete="email" onkeypress="if(event.key==='Enter')entrarDesdePanel()">
+        <button class="btn-primary" onclick="entrarDesdePanel()">✉ Enviar enlace de acceso</button>
+        <div class="login-div">o</div>
+        <button class="btn-ghost btn-small" onclick="entrarSinCuenta()">Entrar sin cuenta (solo este navegador)</button>
+        <p style="font-size:.75rem;margin:14px 0 0">Cada correo ve únicamente su propia información.</p>
+    </div>
+</div>
 
 <script>
     const LS_KEY = 'planMaterialesPro_v1';
@@ -1692,30 +1713,53 @@
             nube.on = true;
             nube.client.auth.onAuthStateChange(async (ev, session) => {
                 nube.user = (session && session.user) || null;
-                if (nube.user && (ev === 'SIGNED_IN' || ev === 'INITIAL_SESSION')) await pullNube();
+                if (nube.user) {
+                    try { localStorage.removeItem(LS_SKIP); } catch (e) { /* noop */ }
+                    ocultarLogin();
+                    if (ev === 'SIGNED_IN' || ev === 'INITIAL_SESSION') await pullNube();
+                }
                 actualizaNubeUI();
             });
-            if (nube.user) await pullNube();
-            else setNubeEstado('local');
+            if (nube.user) { ocultarLogin(); await pullNube(); }
+            else { setNubeEstado('local'); if (!quiereSaltarLogin()) mostrarLogin(); }
         } catch (e) {
             nube.on = false;
             setNubeEstado('error');
         }
         actualizaNubeUI();
     }
-    async function entrarNube() {
-        if (!nube.client) { toast('Primero pega tus claves de Supabase en el archivo.', 'error'); return; }
-        const email = (($('nubeEmail') && $('nubeEmail').value) || '').trim();
-        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo válido.', 'error'); return; }
+    const LS_SKIP = 'planMaterialesPro_saltarLogin_v1';
+    function mostrarLogin() { const p = $('panelLogin'); if (p && nubeConfigurada()) p.style.display = 'flex'; }
+    function ocultarLogin() { const p = $('panelLogin'); if (p) p.style.display = 'none'; }
+    function quiereSaltarLogin() { try { return localStorage.getItem(LS_SKIP) === '1'; } catch (e) { return false; } }
+    async function enviarEnlace(email) {
+        email = (email || '').trim();
+        if (!email || email.indexOf('@') < 0) { toast('Ingresa un correo válido.', 'error'); return false; }
+        if (!nube.client) { toast('Nube no disponible (modo local).', 'error'); return false; }
         setNubeEstado('guardando');
         const { error } = await nube.client.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } });
-        if (error) { setNubeEstado('error'); toast('Error: ' + error.message, 'error'); }
-        else { setNubeEstado('local'); toast('Revisa tu correo y abre el enlace mágico.', 'success'); }
+        if (error) { setNubeEstado('error'); toast('Error: ' + error.message, 'error'); return false; }
+        setNubeEstado('local');
+        toast('Revisa tu correo y abre el enlace mágico.', 'success');
+        return true;
+    }
+    async function entrarNube() {
+        if (!nube.client) { toast('Primero pega tus claves de Supabase en el archivo.', 'error'); return; }
+        await enviarEnlace($('nubeEmail') && $('nubeEmail').value);
+    }
+    async function entrarDesdePanel() {
+        await enviarEnlace($('loginEmail') && $('loginEmail').value);
+    }
+    function entrarSinCuenta() {
+        try { localStorage.setItem(LS_SKIP, '1'); } catch (e) { /* noop */ }
+        ocultarLogin();
+        toast('Modo local: tus datos quedan solo en este navegador.', 'info');
     }
     async function salirNube() {
         try { if (nube.client) await nube.client.auth.signOut(); } catch (e) { /* noop */ }
         nube.user = null;
         actualizaNubeUI();
+        mostrarLogin();
         toast('Sesión cerrada. Sigues en modo local.', 'info');
     }
     function datosParaNube() {
