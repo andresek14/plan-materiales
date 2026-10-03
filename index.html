@@ -1748,12 +1748,19 @@
         if (!nube.client) { toast('Nube no disponible (modo local).', 'error'); return null; }
         return { email, password };
     }
+    function errorClaveAmable(msg) {
+        msg = String(msg || '');
+        if (/already registered|already been registered/i.test(msg)) return 'Ese correo ya tiene cuenta. Usa Entrar.';
+        if (/invalid login credentials/i.test(msg)) return 'Correo o contraseña incorrectos.';
+        if (/password/i.test(msg)) return 'La contraseña debe tener mínimo 6 caracteres.';
+        return msg;
+    }
     async function entrarDesdePanel() {
         const c = leerCredenciales();
         if (!c) return;
         setNubeEstado('guardando');
         const { error } = await nube.client.auth.signInWithPassword(c);
-        if (error) { setNubeEstado('error'); toast('No se pudo entrar: ' + error.message, 'error'); }
+        if (error) { setNubeEstado('error'); toast('No se pudo entrar: ' + errorClaveAmable(error.message), 'error'); }
         // Si entra, onAuthStateChange oculta el panel y trae tus datos.
     }
     async function crearCuentaDesdePanel() {
@@ -1761,7 +1768,7 @@
         if (!c) return;
         setNubeEstado('guardando');
         const { error } = await nube.client.auth.signUp(c);
-        if (error) { setNubeEstado('error'); toast('No se pudo crear: ' + error.message, 'error'); }
+        if (error) { setNubeEstado('error'); toast('No se pudo crear: ' + errorClaveAmable(error.message), 'error'); }
         else toast('Cuenta creada. Ya estás dentro.', 'success');
     }
     function abrirLogin() {
